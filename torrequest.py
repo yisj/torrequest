@@ -11,10 +11,12 @@ class TorRequest(object):
   def __init__(self, 
       proxy_port=9050, 
       ctrl_port=9051,
-      password=None):
+      password=None,
+      data_directory='~/.tor/custom1'):
 
     self.proxy_port = proxy_port
     self.ctrl_port = ctrl_port
+    self.data_directory = data_directory
     
     self._tor_proc = None
     if not self._tor_process_exists():
@@ -41,7 +43,8 @@ class TorRequest(object):
     return launch_tor_with_config(
       config={
         'SocksPort': str(self.proxy_port),
-        'ControlPort': str(self.ctrl_port)
+        'ControlPort': str(self.ctrl_port),
+        'DataDirectory': str(self.data_directory)
       },
       take_ownership=True)
 
